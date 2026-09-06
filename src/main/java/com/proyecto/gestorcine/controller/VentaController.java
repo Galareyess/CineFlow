@@ -1,5 +1,6 @@
 package com.proyecto.gestorcine.controller;
 
+import com.proyecto.gestorcine.dto.VentaRequest;
 import com.proyecto.gestorcine.entity.Reserva;
 import com.proyecto.gestorcine.entity.Ticket;
 import com.proyecto.gestorcine.service.VentaService;
@@ -25,9 +26,11 @@ public class VentaController {
     @GetMapping("/tickets")
     public List<Ticket> allTickets() { return service.findAllTickets(); }
 
+    /*Request contiene la tarjeta y la reserva*/
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Reserva create(@Valid @RequestBody Reserva reserva) { return service.save(reserva); }
+    public Reserva create(@Valid @RequestBody VentaRequest request) {
+        return service.save(request.getReserva(), request.getTarjeta()); }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

@@ -1,7 +1,6 @@
 package com.proyecto.gestorcine.service;
 
 import com.proyecto.gestorcine.dto.DatosTarjeta;
-import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 /*Pago simulado*/
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class PagoService {
 
     /*Si todas las condiciones se cumplen, se procesara el pago*/
-    public boolean procesarPago(DatosTarjeta tarjeta) {
+    public boolean procesarPago(DatosTarjeta tarjeta, int monto) {
         if (tarjeta == null) {
             return false;
         }
@@ -22,13 +21,22 @@ public class PagoService {
             return false;
         }
 
-        if (tarjeta.getCvv() == null || tarjeta.getCvv().length() != 3) {
+        if(tarjeta.getCvv() == null || tarjeta.getCvv().length() != 3) {
             return false;
         }
 
-        if (tarjeta.getVencimiento() == null || tarjeta.getVencimiento().isBlank()) {
+        if(tarjeta.getVencimiento() == null || tarjeta.getVencimiento().isBlank()) {
             return false;
         }
+
+        if(monto <= 0){
+            return false;
+        }
+
+        if(monto > tarjeta.getFondos()){
+            return false;
+        }
+        tarjeta.setFondos(tarjeta.getFondos() - monto);
 
         return true;
     }

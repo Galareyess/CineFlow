@@ -16,4 +16,5 @@ public class DatosTarjeta {
     private String titular;
     private String vencimiento;
     private String cvv;
+    private int fondos;
 }

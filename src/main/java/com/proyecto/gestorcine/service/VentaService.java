@@ -18,6 +18,7 @@ import java.util.List;
 
 @Service
 public class VentaService {
+    private static final int PRECIO_ENTRADA = 5000;
     private final ReservaRepository repository;
     private final TicketRepository ticketRepository;
     private final ButacaRepository butacaRepository;
@@ -68,6 +69,18 @@ public class VentaService {
             t.setFuncion(funcion);
             t.setButaca(butaca);
             t.setReserva(reserva);
+            /*El backend establece el precio de forma automatica al estar como constante*/
+            t.setPrecio(PRECIO_ENTRADA);
+        }
+
+        /*Precio total*/
+        int total = 0;
+        for(Ticket t : reserva.getTickets()){
+            total += t.getPrecio();
+        }
+
+        if(!pagoService.procesarPago(tarjeta, total)){
+            throw new IllegalArgumentException("Pago rechazado");
         }
 
         Reserva guardada = repository.save(reserva);
