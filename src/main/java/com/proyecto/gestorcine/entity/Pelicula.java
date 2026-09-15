@@ -25,9 +25,9 @@ public class Pelicula {
     @Column(name = "nombre", nullable = false, length = 150)
     private String nombre;
 
-    // Genero como numero (id de un catalogo de generos), igual que el original.
-    @Column(name = "genero")
-    private int genero;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "genero", length = 20)
+    private Genero genero;
 
     @Positive
     @Column(name = "duracion")
