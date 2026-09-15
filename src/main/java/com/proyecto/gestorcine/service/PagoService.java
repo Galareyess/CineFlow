@@ -1,14 +1,14 @@
 package com.proyecto.gestorcine.service;
 
 import com.proyecto.gestorcine.dto.DatosTarjeta;
+import java.math.BigDecimal;
 import org.springframework.stereotype.Service;
 
-/*Pago simulado*/
 @Service
 public class PagoService {
 
     /*Si todas las condiciones se cumplen, se procesara el pago*/
-    public boolean procesarPago(DatosTarjeta tarjeta, int monto) {
+    public boolean procesarPago(DatosTarjeta tarjeta, BigDecimal monto) {
         if (tarjeta == null) {
             return false;
         }
@@ -29,14 +29,9 @@ public class PagoService {
             return false;
         }
 
-        if(monto <= 0){
+        if (monto.compareTo(BigDecimal.ZERO) <= 0) {
             return false;
         }
-
-        if(monto > tarjeta.getFondos()){
-            return false;
-        }
-        tarjeta.setFondos(tarjeta.getFondos() - monto);
 
         return true;
     }

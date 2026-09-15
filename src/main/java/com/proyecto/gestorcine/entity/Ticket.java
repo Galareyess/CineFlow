@@ -1,6 +1,7 @@
 package com.proyecto.gestorcine.entity;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,5 +38,10 @@ public class Ticket {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reserva_id", nullable = false)
+    // Sin esto, convertir una Reserva a JSON entra en loop infinito:
+    // Reserva -> tickets -> ticket.reserva -> tickets -> ... El cliente
+    // ya sabe a que reserva pertenece el ticket por contexto, no hace
+    // falta que cada ticket la traiga de vuelta.
+    @JsonIgnore
     private Reserva reserva;
 }

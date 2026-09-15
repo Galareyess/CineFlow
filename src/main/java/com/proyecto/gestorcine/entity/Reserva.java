@@ -33,6 +33,9 @@ public class Reserva {
     @OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ticket> tickets = new ArrayList<>();
 
+    @OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DetalleProducto> detallesProducto = new ArrayList<>();
+
     // Constructor manual a proposito: no usamos @AllArgsConstructor aca
     // porque incluiria "tickets" como parametro, y queremos que siempre
     // arranque en una lista vacia (no que la pise quien la instancie).
@@ -50,5 +53,10 @@ public class Reserva {
     public void agregarTicket(Ticket ticket) {
         tickets.add(ticket);
         ticket.setReserva(this);
+    }
+
+    public void agregarDetalleProducto(DetalleProducto detalle) {
+        detallesProducto.add(detalle);
+        detalle.setReserva(this);
     }
 }

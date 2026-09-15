@@ -15,15 +15,21 @@ public class ComboService {
         this.repository = repository;
     }
 
-    public List<Producto> findAll() { return repository.findAll(); }
+    public List<Producto> findAll() {
+        return repository.findAll();
+    }
 
     public Producto findById(Integer id) {
         return repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado: " + id));
     }
 
-    public Producto save(Producto producto) { return repository.save(producto); }
+    public Producto save(Producto producto) {
+        return repository.save(producto);
+    }
 
-    public void delete(Integer id) { repository.deleteById(id); }
+    public void delete(Integer id) {
+        repository.deleteById(id);
+    }
 
     @Transactional
     public void descontarStock(Integer id, int cantidad) {
@@ -32,5 +38,11 @@ public class ComboService {
             throw new IllegalArgumentException("Stock insuficiente para " + producto.getNombre());
         }
         producto.setStock(producto.getStock() - cantidad);
+    }
+
+    @Transactional
+    public void reponerStock(Integer id, int cantidad) {
+        Producto producto = findById(id);
+        producto.setStock(producto.getStock() + cantidad);
     }
 }
