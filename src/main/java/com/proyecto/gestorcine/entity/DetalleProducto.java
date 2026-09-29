@@ -3,6 +3,7 @@ package com.proyecto.gestorcine.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,6 +35,7 @@ public class DetalleProducto {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "codigo_reserva", nullable = false)
+    @JsonIgnore
     private Reserva reserva;
 
     public DetalleProducto(Producto producto, int cantidad, BigDecimal precioUnitario) {
